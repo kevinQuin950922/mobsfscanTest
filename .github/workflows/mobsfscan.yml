@@ -1,5 +1,4 @@
-name: mobsfscan
-
+name: mobsfscan sarif
 on:
   push:
     branches: [ master, main ]
@@ -7,11 +6,17 @@ on:
     branches: [ master, main ]
 
 jobs:
-  build:
+  mobsfscan:
     runs-on: ubuntu-latest
+    name: mobsfscan code scanning
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout the code
+      uses: actions/checkout@v2
     - name: mobsfscan
       uses: MobSF/mobsfscan@main
       with:
-        args: '. --json'
+        args: '. --sarif --output results.sarif || true'
+    - name: Upload mobsfscan report
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: results.sarif
