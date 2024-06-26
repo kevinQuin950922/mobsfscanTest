@@ -1,0 +1,61 @@
+name: MobSF Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  analyze-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install requests
+
+    - name: Download MobSF
+      run: |
+        git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
+        cd Mobile-Security-Framework-MobSF
+        ./setup.sh
+
+    - name: Start MobSF
+      run: |
+        cd Mobile-Security-Framework-MobSF
+        nohup ./run.sh &
+
+    - name: Wait for MobSF to start
+      run: sleep 60
+
+    - name: Analyze APK with MobSF
+      run: |
+        cd Mobile-Security-Framework-MobSF
+        python3 -m pip install -r requirements.txt
+        python3 scripts/analyze.py appPrueba.apk
+
+    - name: Save MobSF Report
+      run: |
+        cd Mobile-Security-Framework-MobSF
+        mkdir -p reports
+        mv your_apk_file.json reports/
+      # Puedes guardar el informe generado como un artefacto del flujo de trabajo
+
+    - name: Upload MobSF report
+      uses: actions/upload-artifact@v2
+      with:
+        name: mobsf-report
+        path: Mobile-Security-Framework-MobSF/reports/
