@@ -25,5 +25,10 @@ jobs:
             sleep 60 
         - name : run cypress
           run: |
-            docker ps
             npx cypress run
+        - name : public result
+          uses: actions/upload-artefact@v2
+          with:
+            name: mobsf-report
+            path: ./report/
+            
