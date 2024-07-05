@@ -27,7 +27,7 @@ jobs:
           run: |
             npx cypress run
         - name : public result
-          uses: actions/upload-artefact@v2
+          uses: actions/upload-artefact@v4
           with:
             name: mobsf-report
             path: ./report/
