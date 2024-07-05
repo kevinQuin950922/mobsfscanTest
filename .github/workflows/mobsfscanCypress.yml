@@ -26,9 +26,17 @@ jobs:
         - name : run cypress
           run: |
             npx cypress run
+        - name : convert report to sarif
+          run: |
+            sudo pip install joern2sarif
+            joern2sarif -t ocular -i ./report/reporteMobsf.json -o ./report/reporteMobsf.sarif
         - name : public result
           uses: actions/upload-artifact@v4
           with:
             name: mobsf-report
-            path: ./report/reporteMobsf.json
+            path: ./report
+        - name: Upload sarif
+          uses: github/codeql-action/upload-sarif@v1
+          with:
+            sarif_file: report
             
