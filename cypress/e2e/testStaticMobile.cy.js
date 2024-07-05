@@ -1,9 +1,20 @@
 const FormData = require('form-data');
 const fs = require('fs');
 let hash="";
-const apiKey="bc6ba3b7b8e82f082b5cb966c1f86a24d95725b072c44a010cdb234c4fa8d19b"
+let apiKey=""
 
 describe('Se consumen los servicios de la API de mobsf para realizar el analisis estatico', () => {
+  it('Se realiza el login a mobsf y se extrae el apiKey',()=>{
+    cy.visit('http://0.0.0.0:8000');
+    cy.get(':nth-child(2) > .form-control').type("mobsf");
+    cy.get(':nth-child(3) > .form-control').type("mobsf");
+    cy.get('.col-12 > .btn').click();
+    cy.get('.nav > [href="/api_docs"]').click()
+    cy.get('strong > code').invoke('text').then(key => {
+      apiKey=key;
+    });
+  });
+
   it('Se sube el apk para poder analizarla', () => {
     const filepath ='flypassParquimetrosV59.apk';
     cy.fixture(filepath, 'binary')
