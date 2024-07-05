@@ -22,6 +22,7 @@ jobs:
           run: |
             docker pull opensecurity/mobile-security-framework-mobsf:latest
             docker run -d -p 8000:8000 opensecurity/mobile-security-framework-mobsf
+            sleep 60 
         - name : run cypress
           run: |
             docker ps
