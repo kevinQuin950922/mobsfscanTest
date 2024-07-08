@@ -26,10 +26,9 @@ jobs:
         - name : run cypress
           run: |
             npx cypress run
-        - name: Publish Test Results
-          uses: EnricoMi/publish-unit-test-result-action@v2
-          if: always()
+        - name: Upload MobSF report
+          uses: actions/upload-artifact@v2
           with:
-            files: |
-                report/reporteMobsf.json
+            name: mobsf-report
+            path: Mobile-Security-Framework-MobSF/reports/pdf
             

@@ -56,4 +56,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: mobsf-report
-        path: Mobile-Security-Framework-MobSF/reports/
+        path: Mobile-Security-Framework-MobSF/reports/pdf
