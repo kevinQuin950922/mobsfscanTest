@@ -80,5 +80,23 @@ describe('Se consumen los servicios de la API de mobsf para realizar el analisis
       cy.writeFile('report/reporteMobsf.json',reporte);
     });
   });
+  it('se descarga pdf', () => {
+    const body={
+      "hash":hash
+    };
+    cy.request({
+      method: 'POST',
+      url: 'api/v1/download_pdf',
+      headers: {
+        Authorization: apiKey,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: body,
+      encoding: 'binary'
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      cy.writeFile('report/pdf/report.pdf', response.body, 'binary');
+    });
+  });
 
 });

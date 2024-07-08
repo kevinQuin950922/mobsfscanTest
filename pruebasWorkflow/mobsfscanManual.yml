@@ -43,13 +43,11 @@ jobs:
 
     - name: Analyze APK with MobSF
       run: |
-        cd Mobile-Security-Framework-MobSF
         python3 -m pip install -r requirements.txt
         python3 scripts/analyze.py appPrueba.apk
 
     - name: Save MobSF Report
       run: |
-        cd Mobile-Security-Framework-MobSF
         mkdir -p reports
         mv your_apk_file.json reports/
       # Puedes guardar el informe generado como un artefacto del flujo de trabajo
