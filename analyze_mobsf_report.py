@@ -34,6 +34,6 @@ bandera=mostrar_analisis(reporte_code,bandera)
 if bandera==0:
   print("No se encontraron hallazgos importantes en el analisis")
 else:
-  print("Dentro de los reportes existes hallazgos con valor high o warning")
+  print("Error: Dentro de los reportes existen hallazgos con valor high o warning")
   sys.exit(1)
 
